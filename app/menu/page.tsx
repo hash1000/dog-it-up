@@ -9,11 +9,11 @@ export const metadata = {
 
 export default function MenuPage() {
   return (
-    <div className="mx-auto flex w-full max-w-[1600px] flex-col">
+    <div className="flex w-full flex-col">
       <Navbar />
       <main className="flex flex-1 flex-col">
         <Image
-          src="/menu/menu-hero.png"
+          src="/menu/menu-hero.webp"
           alt="DOG IT UP signature hot dogs, sides and drinks"
           width={1440}
           height={700}

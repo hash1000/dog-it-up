@@ -12,7 +12,7 @@ const pins = [
 export default function LocationSection() {
   return (
     <section id="locations" className="w-full bg-surface py-16 sm:py-24">
-      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-12 px-6 md:px-10 lg:grid-cols-2 lg:px-0">
+      <div className="mx-auto grid max-w-content grid-cols-1 items-center gap-12 px-6 md:px-12 lg:grid-cols-2">
         <div className="flex flex-col items-start gap-6">
           <h2 className="text-h1 font-bold text-primary">Find us Near you.</h2>
           <span className="h-px w-24 bg-ink/10" aria-hidden="true" />

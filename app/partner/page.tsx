@@ -43,12 +43,12 @@ const benefits = [
 
 export default function PartnerPage() {
   return (
-    <div className="mx-auto flex w-full max-w-[1600px] flex-col">
+    <div className="flex w-full flex-col">
       <Navbar />
       <main className="flex flex-1 flex-col">
         <div className="relative w-full">
           <Image
-            src="/partner/partner-hero.png"
+            src="/partner/partner-hero.webp"
             alt="DOG IT UP counter in a convenience retail location"
             width={1440}
             height={1080}
@@ -58,9 +58,9 @@ export default function PartnerPage() {
         </div>
 
         <section className="relative z-10 w-full">
-          <div className="mx-auto max-w-content px-6 md:px-10 lg:px-0">
+          <div className="mx-auto max-w-content px-6 md:px-12">
             <div className="w-full max-w-[832px] border border-surface bg-surface/60 px-6 py-12 backdrop-blur-sm sm:-mt-[290px] sm:px-20 sm:py-[103px]">
-              <h1 className="text-h1 font-black leading-tight text-ink sm:text-[48px]">
+              <h1 className="text-h3 font-black leading-tight text-ink sm:text-[48px]">
                 Bring Dog It Up
                 <span className="block">to your Location.</span>
               </h1>
@@ -78,14 +78,14 @@ export default function PartnerPage() {
                 <Button
                   href="#contact"
                   variant="filled"
-                  className="!h-[79px] w-[296px] !rounded-none text-body-lg !font-normal"
+                  className="!h-[79px] w-full sm:w-[296px] !rounded-none text-body-lg !font-normal"
                 >
                   Request More Info
                 </Button>
                 <Button
                   href="/menu"
                   variant="outlined"
-                  className="!h-[79px] w-[296px] !rounded-none !border text-body-lg !font-normal"
+                  className="!h-[79px] w-full sm:w-[296px] !rounded-none !border text-body-lg !font-normal"
                 >
                   View Our Menu
                 </Button>
@@ -95,7 +95,7 @@ export default function PartnerPage() {
         </section>
 
         <section className="w-full bg-surface py-16 sm:py-[127px]">
-          <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[160px] md:px-10 lg:px-0">
+          <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[160px] md:px-12">
             <SectionTitleRow title="Why Operators Choose DOG IT UP" />
             <div className="mx-auto grid w-full max-w-[1069px] grid-cols-1 gap-x-[140px] gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
               {benefits.map(({ title, description, icon: Icon }) => (

@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col overflow-x-clip" suppressHydrationWarning>
         {children}
       </body>
     </html>

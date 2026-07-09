@@ -17,7 +17,7 @@ export default function SectionTitleRow({ title }: { title: string }) {
     <div className="flex w-full items-center gap-4 sm:gap-5">
       <span className="h-px flex-1 bg-ink" aria-hidden="true" />
       <StarIcon className="h-6 w-6 shrink-0 text-ink" />
-      <h3 className="whitespace-nowrap text-center text-h3 font-extrabold text-ink sm:text-[45px]">
+      <h3 className="text-center text-[24px] font-extrabold text-ink sm:text-h3 lg:text-[45px]">
         {title}
       </h3>
       <StarIcon className="h-6 w-6 shrink-0 text-ink" />

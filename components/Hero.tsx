@@ -14,7 +14,7 @@ const features = [
 export default function Hero() {
   return (
     <section className="relative w-full overflow-hidden bg-surface">
-      <div className="relative mx-auto aspect-[1441/1076] w-full max-w-[1600px] min-h-[420px] sm:min-h-[560px]">
+      <div className="relative aspect-[1441/1076] w-full min-h-[420px] sm:min-h-[560px]">
         <Image
           src="/assets/hero-web-cover.jpg"
           alt="Assortment of DOG IT UP hot dogs"
@@ -25,7 +25,7 @@ export default function Hero() {
         />
 
         <div className="absolute inset-0 flex items-center">
-          <div className="mx-auto w-full max-w-content px-6 md:px-10 lg:px-0">
+          <div className="mx-auto w-full max-w-content px-6 md:px-12">
             <HeroRevealGroup className="flex max-w-xl flex-col items-start gap-6">
               <HeroRevealItem>
                 <Image

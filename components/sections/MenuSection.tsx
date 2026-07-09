@@ -22,7 +22,7 @@ export default function MenuSection({
 }) {
   return (
     <section id="menu" className="w-full bg-surface py-16 sm:py-[100px]">
-      <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[103px] md:px-10 lg:px-0">
+      <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[103px] md:px-12">
         {showHeading && (
           <h2 className="text-center text-h1 font-black text-primary">MENU</h2>
         )}
