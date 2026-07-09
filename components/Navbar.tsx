@@ -27,7 +27,6 @@ export default function Navbar() {
             priority
             className="h-9 w-auto object-contain"
           />
-          
         </Link>
         <ul className="hidden items-center gap-[47px] lg:flex">
           {navLinks.map((link) => (

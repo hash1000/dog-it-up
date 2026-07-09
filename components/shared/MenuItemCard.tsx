@@ -7,8 +7,8 @@ export default function MenuItemCard({ item }: { item: MenuItem }) {
       <Image
         src={item.image}
         alt={item.name}
-        width={393}
-        height={394}
+        width={400}
+        height={400}
         className="h-auto w-full object-cover"
       />
       <h4 className="text-card-title font-bold text-primary">{item.name}</h4>

@@ -41,14 +41,14 @@
   --radius-pill-md: var(--radius-pill-md);
   --radius-pill-lg: var(--radius-pill-lg);
 
-  --font-size-display: var(--font-size-display);
-  --font-size-h1: var(--font-size-h1);
-  --font-size-h2: var(--font-size-h2);
-  --font-size-h3: var(--font-size-h3);
-  --font-size-card-title: var(--font-size-card-title);
-  --font-size-body-lg: var(--font-size-body-lg);
-  --font-size-body: var(--font-size-body);
-  --font-size-caption: var(--font-size-caption);
+  --text-display: var(--font-size-display);
+  --text-h1: var(--font-size-h1);
+  --text-h2: var(--font-size-h2);
+  --text-h3: var(--font-size-h3);
+  --text-card-title: var(--font-size-card-title);
+  --text-body-lg: var(--font-size-body-lg);
+  --text-body: var(--font-size-body);
+  --text-caption: var(--font-size-caption);
 
   --font-sans: var(--font-inter);
 }

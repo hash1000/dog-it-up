@@ -9,7 +9,7 @@ export const signatureDogs: MenuItem[] = [
   {
     slug: "classic-american",
     name: "Classic American",
-    image: "/menu/classic-american.webp",
+    image: "/menu/american-classic.webp",
     description:
       "100% All Beef Hot Dog, topped with Ketchup, Mustard and Relish.",
   },
@@ -47,7 +47,7 @@ export const sides: MenuItem[] = [
   {
     slug: "crinkle-fries",
     name: "Crinkle Fries",
-    image: "/menu/crinkle-fries.webp",
+    image: "/menu/crinkle-cut-fries.webp",
     description: "Regular or Large",
   },
   {
