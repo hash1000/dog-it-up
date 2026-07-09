@@ -14,16 +14,16 @@ const features = [
 export default function Hero() {
   return (
     <section className="relative w-full overflow-hidden py-8 sm:py-12 lg:py-20">
-      {/* Desktop/tablet: shorter 1440×700 export, capped at 700px so the
-          hero fits the viewport while keeping the composition uncropped. */}
-      <div className="relative mx-auto hidden w-full max-w-[1600px] sm:block sm:min-h-[560px] sm:h-[calc(100vh-68px)] sm:max-h-[700px]">
+      {/* Desktop/tablet: 1440×700 export — wrapper keeps the image's own
+          aspect ratio so the composition is never cropped. */}
+      <div className="relative mx-auto hidden w-full max-w-[1440px] sm:block sm:aspect-[1440/700]">
         <Image
-          src="/hero/Hero Image 2.webp"
+          src="/hero/hero-Image.webp"
           alt="Assortment of DOG IT UP signature hot dogs"
           fill
           priority
           sizes="(min-width: 1600px) 1600px, 100vw"
-          className="object-cover object-right-top"
+          className="object-cover "
         />
 
         {/* Text column per Figma: x:100 (shared gutter with navbar logo),
@@ -121,7 +121,7 @@ export default function Hero() {
         </div>
         <div className="relative aspect-square w-full">
           <Image
-            src="/hero/hero-cover.webp"
+            src="/hero/hero-Image.webp"
             alt="Assortment of DOG IT UP signature hot dogs"
             fill
             priority
