@@ -8,6 +8,7 @@
   --color-ink-soft: #0a0808;
   --color-surface: #ffffff;
   --color-surface-muted: #fff0f0;
+  --color-surface-hero: #fafafa; /* sampled from hero-cover1.webp studio bg */
   --color-muted-foreground: #919191;
 
   --radius-input: 16px;
@@ -32,6 +33,7 @@
   --color-ink-soft: var(--color-ink-soft);
   --color-surface: var(--color-surface);
   --color-surface-muted: var(--color-surface-muted);
+  --color-surface-hero: var(--color-surface-hero);
   --color-muted-foreground: var(--color-muted-foreground);
 
   --radius-input: var(--radius-input);

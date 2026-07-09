@@ -13,7 +13,7 @@ const features = [
 
 export default function Hero() {
   return (
-    <section className="relative w-full overflow-hidden bg-surface">
+    <section className="relative w-full overflow-hidden bg-surface-hero py-8 sm:py-12 lg:py-16">
       {/* Desktop/tablet: shorter 1440×700 export, capped at 700px so the
           hero fits the viewport while keeping the composition uncropped. */}
       <div className="relative mx-auto hidden w-full max-w-[1600px] sm:block sm:min-h-[560px] sm:h-[calc(100vh-68px)] sm:max-h-[700px]">
