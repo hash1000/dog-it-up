@@ -1,8 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import MenuSection from "@/components/MenuSection";
-import DealSection from "@/components/DealSection";
-import LocationSection from "@/components/LocationSection";
+import SignatureFlavorsBanner from "@/components/SignatureFlavorsBanner";
+import MenuSection from "@/components/sections/MenuSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import SubscriptionBar from "@/components/SubscriptionBar";
 import Footer from "@/components/Footer";
@@ -13,9 +12,8 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-1 flex-col">
         <Hero />
+        <SignatureFlavorsBanner />
         <MenuSection />
-        <DealSection />
-        <LocationSection />
         <WhyChooseUs />
         <SubscriptionBar />
       </main>

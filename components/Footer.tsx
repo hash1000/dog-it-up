@@ -4,15 +4,27 @@ import Link from "next/link";
 const columns = [
   {
     title: "Menu",
-    links: ["All Menu", "Signature Dogs", "Sides", "Drinks", "Combos"],
+    links: [
+      { label: "All Menu", href: "/menu" },
+      { label: "Signature Dogs", href: "/menu" },
+      { label: "Sides", href: "/menu" },
+      { label: "Drinks", href: "/menu" },
+      { label: "Combos", href: "/menu" },
+    ],
   },
   {
     title: "Restaurant",
-    links: ["About us", "Partner with us"],
+    links: [
+      { label: "About us", href: "/about" },
+      { label: "Partner with us", href: "/partner" },
+    ],
   },
   {
     title: "Help",
-    links: ["FAQs", "Contact us"],
+    links: [
+      { label: "FAQs", href: "#" },
+      { label: "Contact us", href: "#" },
+    ],
   },
 ];
 
@@ -48,9 +60,9 @@ export default function Footer() {
               <h3 className="text-body-lg font-bold text-ink">{col.title}</h3>
               <ul className="mt-2">
                 {col.links.map((link) => (
-                  <li key={link} className="leading-[50px]">
-                    <Link href="#" className="text-body text-ink-soft hover:text-primary">
-                      {link}
+                  <li key={link.label} className="leading-[50px]">
+                    <Link href={link.href} className="text-body text-ink-soft hover:text-primary">
+                      {link.label}
                     </Link>
                   </li>
                 ))}

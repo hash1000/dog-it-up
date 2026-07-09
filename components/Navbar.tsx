@@ -7,9 +7,9 @@ import Button from "./Button";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Menu", href: "#menu" },
-  { label: "About us", href: "#about" },
-  { label: "Partner with us", href: "#partner" },
+  { label: "Menu", href: "/menu" },
+  { label: "About us", href: "/about" },
+  { label: "Partner with us", href: "/partner" },
 ];
 
 export default function Navbar() {
@@ -41,8 +41,8 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-4">
-          <Button href="#order" variant="filled" className="!hidden !h-9 !rounded-pill-sm !bg-accent !px-6 lg:!inline-flex">
+        <div className="flex items-center gap-[22px]">
+          <Button href="#order" variant="filled" className="!hidden !h-9 !rounded-pill-sm !bg-accent !px-6 !text-caption lg:!inline-flex">
             Order Now
           </Button>
           <button

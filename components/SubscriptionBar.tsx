@@ -39,13 +39,13 @@ export default function SubscriptionBar() {
           <p className="text-body-lg text-surface">No Spam, Unsubscribe anytime.</p>
         </div>
 
-        <div className="relative h-[220px] w-[220px] shrink-0 sm:h-[300px] sm:w-[300px]">
+        <div className="relative hidden h-[312px] w-[719px] max-w-[50%] shrink-0 self-end sm:block">
           <Image
-            src="/assets/kansas-city-smokehouse.jpg"
-            alt="DOG IT UP hot dog"
+            src="/shared/subscription-food.png"
+            alt="DOG IT UP hot dog, fries and drink"
             fill
-            sizes="300px"
-            className="object-contain"
+            sizes="719px"
+            className="object-contain object-bottom"
           />
         </div>
       </div>
