@@ -4,10 +4,10 @@ export default function SignatureFlavorsBanner() {
   return (
     <section className="relative w-full overflow-visible">
       {/* Red band: full-bleed across the viewport, bottom 314/428 = 73.36% of section height */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-[73.36%] bg-primary"
-        aria-hidden="true"
-      />
+        <div
+          className="absolute inset-x-0 bottom-0 h-[73.36%] bg-primary"
+          aria-hidden="true"
+        />
 
       <div className="relative mx-auto aspect-[1440/428] w-full max-w-[1600px]">
         {/* Photo: inset 100/1440 = 6.94% each side, top-aligned, spans full height */}

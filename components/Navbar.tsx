@@ -7,9 +7,9 @@ import Button from "./Button";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Menu", href: "/menu" },
-  { label: "About us", href: "/about" },
-  { label: "Partner with us", href: "/partner" },
+  { label: "Menu", href: "#menu" },
+  { label: "About us", href: "#about" },
+  { label: "Partner with us", href: "#partner" },
 ];
 
 export default function Navbar() {
@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <nav className="w-full shrink-0 border-b border-ink/5 bg-surface">
-      <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4 md:px-12">
+      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-4 md:px-12 xl:px-gutter">
         <Link href="/" className="flex shrink-0 items-center">
           <Image
             src="/assets/nav-bar-logo.jpg"
@@ -27,6 +27,7 @@ export default function Navbar() {
             priority
             className="h-9 w-auto object-contain"
           />
+          
         </Link>
         <ul className="hidden items-center gap-[47px] lg:flex">
           {navLinks.map((link) => (
@@ -41,8 +42,8 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-[22px]">
-          <Button href="#order" variant="filled" className="!hidden !h-9 !rounded-pill-sm !bg-accent !px-6 !text-caption lg:!inline-flex">
+        <div className="flex items-center gap-4">
+          <Button href="#order" variant="filled" className="!hidden !h-9 !rounded-pill-sm !bg-accent !px-6 lg:!inline-flex">
             Order Now
           </Button>
           <button
