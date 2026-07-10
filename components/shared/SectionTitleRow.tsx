@@ -1,3 +1,16 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  fadeIn,
+  scalePop,
+  growLine,
+  clipReveal,
+  staggerContainer,
+  STAGGER,
+  VIEWPORT,
+} from "@/lib/motion";
+
 function StarIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -12,16 +25,44 @@ function StarIcon({ className }: { className?: string }) {
   );
 }
 
+/**
+ * "— ★ Title ★ —" divider. Lines grow from center, stars pop, title
+ * write-on (clipReveal — the accent-text signature). One stagger timeline.
+ */
 export default function SectionTitleRow({ title }: { title: string }) {
+  const reduced = useReducedMotion();
+  const v = (variant: typeof scalePop) => (reduced ? fadeIn : variant);
+
   return (
-    <div className="flex w-full items-center gap-4 sm:gap-5">
-      <span className="h-px flex-1 bg-ink" aria-hidden="true" />
-      <StarIcon className="h-6 w-6 shrink-0 text-ink" />
-      <h3 className="text-center text-[24px] font-extrabold text-ink sm:text-h3 lg:text-[45px]">
+    <motion.div
+      variants={staggerContainer(STAGGER.tight)}
+      initial="hidden"
+      whileInView="show"
+      viewport={VIEWPORT}
+      className="flex w-full items-center gap-4 sm:gap-5"
+    >
+      <motion.span
+        variants={reduced ? fadeIn : growLine}
+        className="h-px flex-1 origin-center bg-ink"
+        aria-hidden="true"
+      />
+      <motion.span variants={v(scalePop)} className="shrink-0">
+        <StarIcon className="h-6 w-6 text-ink" />
+      </motion.span>
+      <motion.h3
+        variants={v(clipReveal)}
+        className="text-center text-[24px] font-extrabold text-ink sm:text-h3 lg:text-[45px]"
+      >
         {title}
-      </h3>
-      <StarIcon className="h-6 w-6 shrink-0 text-ink" />
-      <span className="h-px flex-1 bg-ink" aria-hidden="true" />
-    </div>
+      </motion.h3>
+      <motion.span variants={v(scalePop)} className="shrink-0">
+        <StarIcon className="h-6 w-6 text-ink" />
+      </motion.span>
+      <motion.span
+        variants={reduced ? fadeIn : growLine}
+        className="h-px flex-1 origin-center bg-ink"
+        aria-hidden="true"
+      />
+    </motion.div>
   );
 }

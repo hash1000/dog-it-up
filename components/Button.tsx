@@ -1,5 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { HOVER_SCALE, TAP_SCALE, HOVER_TRANSITION } from "@/lib/motion";
+
+const MotionLink = motion.create(Link);
 
 type ButtonVariant = "filled" | "outlined" | "on-dark";
 
@@ -14,7 +20,7 @@ interface ButtonProps {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  filled: "bg-primary text-surface hover:opacity-90",
+  filled: "bg-primary text-surface hover:brightness-110",
   outlined: "border-2 border-primary text-primary hover:bg-primary/5",
   "on-dark": "border-2 border-surface text-surface hover:bg-surface/10",
 };
@@ -34,19 +40,27 @@ export default function Button({
   type = "button",
   onClick,
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center gap-2 text-body font-bold transition-colors ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  const reduced = useReducedMotion();
+  const classes = `inline-flex items-center justify-center gap-2 text-body font-bold transition-[filter,background-color,color] duration-200 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  const interaction = reduced
+    ? {}
+    : {
+        whileHover: { scale: HOVER_SCALE },
+        whileTap: { scale: TAP_SCALE },
+        transition: HOVER_TRANSITION,
+      };
 
   if (href) {
     return (
-      <Link href={href} className={classes} onClick={onClick}>
+      <MotionLink href={href} className={classes} onClick={onClick} {...interaction}>
         {children}
-      </Link>
+      </MotionLink>
     );
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <motion.button type={type} className={classes} onClick={onClick} {...interaction}>
       {children}
-    </button>
+    </motion.button>
   );
 }

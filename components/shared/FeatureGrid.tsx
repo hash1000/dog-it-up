@@ -1,37 +1,55 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { EASE, fadeIn, fadeUp, staggerContainer, STAGGER, VIEWPORT } from "@/lib/motion";
+
 const features = [
   {
     title: "Quality Ingredients",
-    description: "We only use the best to serve you the best.",
     icon: QualityIcon,
   },
   {
     title: "Made Fresh Daily",
-    description: "Every bite is crafted fresh in store.",
     icon: FreshIcon,
   },
   {
     title: "Bold Flavors",
-    description: "Big Taste in Every Single Bite.",
     icon: FlavorIcon,
   },
   {
     title: "Fast Service",
-    description: "Quality food served fast.",
     icon: SpeedIcon,
   },
 ];
 
 export default function FeatureGrid() {
+  const reduced = useReducedMotion();
+
   return (
-    <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-[129px]">
-      {features.map(({ title, description, icon: Icon }) => (
-        <div key={title} className="flex flex-col items-center gap-4 text-center">
-          <Icon className="h-[60px] w-[60px] text-primary" />
+    <motion.div
+      variants={staggerContainer(STAGGER.base)}
+      initial="hidden"
+      whileInView="show"
+      viewport={VIEWPORT}
+      className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-40"
+    >
+      {features.map(({ title, icon: Icon }) => (
+        <motion.div
+          key={title}
+          variants={reduced ? fadeIn : fadeUp}
+          whileHover={reduced ? undefined : "bounce"}
+          className="flex flex-col items-center gap-4 text-center"
+        >
+          <motion.span
+            variants={{ bounce: { y: [0, -4, 0], transition: { duration: 0.4, ease: EASE } } }}
+            className="inline-flex"
+          >
+            <Icon className="h-16 w-16 text-primary" />
+          </motion.span>
           <h3 className="text-h3 font-bold text-ink">{title}</h3>
-          <p className="text-body text-ink-soft">{description}</p>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
 

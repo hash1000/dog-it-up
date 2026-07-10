@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Reveal from "@/components/motion/Reveal";
+import RevealGroup from "@/components/motion/RevealGroup";
 
 export default function SignatureFlavorsBanner() {
   return (
@@ -21,14 +23,18 @@ export default function SignatureFlavorsBanner() {
           />
 
           {/* Headline: left 10px in from photo edge (~0.81% of 1240 content width), top 210/428 = 49.07% down */}
-          <div className="absolute left-[0.81%] top-[49.07%] flex flex-col gap-[6.78%]">
-            <h2 className="text-[clamp(18px,4.4vw,64px)] font-bold leading-tight text-surface">
-              Signature Flavors.
-            </h2>
-            <h2 className="text-[clamp(18px,4.4vw,64px)] font-normal leading-tight text-[#fffaf9]">
-              Endless Cravings.
-            </h2>
-          </div>
+          <RevealGroup className="absolute left-[0.81%] top-[49.07%] flex flex-col gap-[6.78%]">
+            <Reveal variant="fadeUp">
+              <h2 className="text-[clamp(18px,4.4vw,64px)] font-bold leading-tight text-surface">
+                Signature Flavors.
+              </h2>
+            </Reveal>
+            <Reveal variant="fadeUp">
+              <h2 className="text-[clamp(18px,4.4vw,64px)] font-normal leading-tight text-[#fffaf9]">
+                Endless Cravings.
+              </h2>
+            </Reveal>
+          </RevealGroup>
         </div>
       </div>
     </section>

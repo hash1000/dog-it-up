@@ -3,6 +3,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 import SectionTitleRow from "@/components/shared/SectionTitleRow";
+import PageEnter from "@/components/motion/PageEnter";
+import Reveal from "@/components/motion/Reveal";
+import RevealGroup from "@/components/motion/RevealGroup";
 
 export const metadata = {
   title: "Partner With Us | DOG IT UP",
@@ -45,25 +48,30 @@ export default function PartnerPage() {
   return (
     <div className="flex w-full flex-col">
       <Navbar />
-      <main className="flex flex-1 flex-col">
+      <PageEnter className="flex flex-1 flex-col">
         <div className="relative w-full">
-          <Image
-            src="/partner/partner-hero.webp"
-            alt="DOG IT UP counter in a convenience retail location"
-            width={1440}
-            height={1080}
-            priority
-            className="h-auto w-full object-cover"
-          />
+          <Reveal variant="settle" className="overflow-hidden">
+            <Image
+              src="/partner/partner-hero.webp"
+              alt="DOG IT UP counter in a convenience retail location"
+              width={1440}
+              height={1080}
+              priority
+              className="h-auto w-full object-cover"
+            />
+          </Reveal>
         </div>
 
         <section className="relative z-10 w-full">
           <div className="mx-auto max-w-content px-6 md:px-12">
-            <div className="w-full max-w-[832px] border border-surface bg-surface/60 px-6 py-12 backdrop-blur-sm sm:-mt-[290px] sm:px-20 sm:py-[103px]">
-              <h1 className="text-h3 font-black leading-tight text-ink sm:text-[48px]">
-                Bring Dog It Up
-                <span className="block">to your Location.</span>
-              </h1>
+            <RevealGroup className="w-full max-w-[832px] border border-surface bg-surface/60 px-6 py-12 backdrop-blur-sm sm:-mt-[290px] sm:px-20 sm:py-[103px]">
+              <Reveal variant="fadeUp">
+                <h1 className="text-h3 font-black leading-tight text-ink sm:text-[48px]">
+                  Bring Dog It Up
+                  <span className="block">to your Location.</span>
+                </h1>
+              </Reveal>
+              <Reveal variant="fadeUp">
               <p className="mt-10 max-w-[656px] text-body-lg leading-10 text-ink sm:mt-[90px]">
                 Dog It Up was created specifically for today&rsquo;s
                 convenience retail and non-traditional restaurant environments.
@@ -74,7 +82,8 @@ export default function PartnerPage() {
                 offering, Dog It Up provides a turnkey solution designed for
                 speed, consistency, and profitability.
               </p>
-              <div className="mt-10 flex flex-wrap gap-10 sm:mt-[87px]">
+              </Reveal>
+              <Reveal variant="fadeUp" className="mt-10 flex flex-wrap gap-10 sm:mt-[87px]">
                 <Button
                   href="#contact"
                   variant="filled"
@@ -89,17 +98,17 @@ export default function PartnerPage() {
                 >
                   View Our Menu
                 </Button>
-              </div>
-            </div>
+              </Reveal>
+            </RevealGroup>
           </div>
         </section>
 
         <section className="w-full bg-surface py-16 sm:py-[127px]">
           <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[160px] md:px-12">
             <SectionTitleRow title="Why Operators Choose DOG IT UP" />
-            <div className="mx-auto grid w-full max-w-[1069px] grid-cols-1 gap-x-[140px] gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+            <RevealGroup className="mx-auto grid w-full max-w-[1069px] grid-cols-1 gap-x-[140px] gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
               {benefits.map(({ title, description, icon: Icon }) => (
-                <div key={title} className="flex max-w-[263px] flex-col">
+                <Reveal key={title} className="flex max-w-[263px] flex-col">
                   <Icon className="h-[50px] w-[50px] text-primary" />
                   <h3 className="mt-8 max-w-[222px] text-[24px] font-bold leading-[34px] text-primary">
                     {title}
@@ -107,12 +116,12 @@ export default function PartnerPage() {
                   <p className="mt-8 text-body font-medium leading-[23px] text-ink">
                     {description}
                   </p>
-                </div>
+                </Reveal>
               ))}
-            </div>
+            </RevealGroup>
           </div>
         </section>
-      </main>
+      </PageEnter>
       <Footer />
     </div>
   );

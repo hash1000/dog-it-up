@@ -1,12 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { passionOne, outfit } from "./fonts";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800", "900"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -24,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${passionOne.variable} ${outfit.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col overflow-x-clip" suppressHydrationWarning>
         {children}
       </body>

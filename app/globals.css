@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-:root {
+@theme {
   --color-primary: #f33505;
   --color-accent: #fc9c05;
   --color-ink: #030102;
@@ -16,41 +16,43 @@
   --radius-pill-md: 30px;
   --radius-pill-lg: 38px;
 
-  --font-size-display: 70px;
-  --font-size-h1: 64px;
-  --font-size-h2: 36px;
-  --font-size-h3: 32px;
-  --font-size-card-title: 28px;
-  --font-size-body-lg: 20px;
-  --font-size-body: 16px;
-  --font-size-caption: 14px;
+  --text-display: 70px;
+  --text-h1: 64px;
+  --text-h2: 36px;
+  --text-h3: 32px;
+  --text-card-title: 28px;
+  --text-body-lg: 20px;
+  --text-body: 16px;
+  --text-caption: 14px;
+
+  /* Menu page palette */
+  --color-flame: #e8531f;
+  --color-char: #1c1917;
+  --color-cream: #fff6e8;
+  --color-mustard: #f2b31b;
+
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
 }
 
 @theme inline {
-  --color-primary: var(--color-primary);
-  --color-accent: var(--color-accent);
-  --color-ink: var(--color-ink);
-  --color-ink-soft: var(--color-ink-soft);
-  --color-surface: var(--color-surface);
-  --color-surface-muted: var(--color-surface-muted);
-  --color-surface-hero: var(--color-surface-hero);
-  --color-muted-foreground: var(--color-muted-foreground);
+  --font-display: var(--font-passion-one);
+  --font-body: var(--font-outfit);
+  --font-sans: var(--font-outfit);
+}
 
-  --radius-input: var(--radius-input);
-  --radius-pill-sm: var(--radius-pill-sm);
-  --radius-pill-md: var(--radius-pill-md);
-  --radius-pill-lg: var(--radius-pill-lg);
-
-  --text-display: var(--font-size-display);
-  --text-h1: var(--font-size-h1);
-  --text-h2: var(--font-size-h2);
-  --text-h3: var(--font-size-h3);
-  --text-card-title: var(--font-size-card-title);
-  --text-body-lg: var(--font-size-body-lg);
-  --text-body: var(--font-size-body);
-  --text-caption: var(--font-size-caption);
-
-  --font-sans: var(--font-inter);
+:root {
+  /* Sticky header height: navbar row py-4 (32px) + h-9 logo (36px).
+     Consumed by the hero (scroll offset) so the number lives in one place. */
+  --header-h: 68px;
 }
 
 body {

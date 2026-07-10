@@ -4,6 +4,9 @@ import Footer from "@/components/Footer";
 import Button from "@/components/Button";
 import SectionTitleRow from "@/components/shared/SectionTitleRow";
 import FeatureGrid from "@/components/shared/FeatureGrid";
+import PageEnter from "@/components/motion/PageEnter";
+import AnimatedText from "@/components/motion/AnimatedText";
+import Reveal from "@/components/motion/Reveal";
 
 export const metadata = {
   title: "About Us | DOG IT UP",
@@ -13,23 +16,29 @@ export default function AboutPage() {
   return (
     <div className="flex w-full flex-col">
       <Navbar />
-      <main className="flex flex-1 flex-col">
-        <Image
-          src="/about/about-hero.webp"
-          alt="DOG IT UP restaurant experience"
-          width={1440}
-          height={699}
-          priority
-          className="h-auto w-full object-cover"
-        />
+      <PageEnter className="flex flex-1 flex-col">
+        <Reveal variant="settle" className="overflow-hidden">
+          <Image
+            src="/about/about-hero.webp"
+            alt="DOG IT UP restaurant experience"
+            width={1440}
+            height={699}
+            priority
+            className="h-auto w-full object-cover"
+          />
+        </Reveal>
 
         <section className="w-full bg-surface py-16 sm:py-[100px]">
           <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[130px] md:px-12">
             <SectionTitleRow title="About DOG IT UP" />
             <div className="mx-auto flex max-w-[952px] flex-col items-start gap-10 sm:gap-[60px]">
-              <h2 className="text-[40px] font-black leading-tight text-primary sm:text-h1 lg:text-[100px] lg:leading-[137px]">
-                A Taste of America
-              </h2>
+              {/* Story blocks alternate a slight x drift: heading from the left, copy from the right */}
+              <AnimatedText
+                as="h2"
+                text="A Taste of America"
+                className="text-[40px] font-black leading-tight text-primary sm:text-h1 lg:text-[100px] lg:leading-[137px]"
+              />
+              <Reveal variant="fadeUp" x={24}>
               <p className="text-body-lg font-medium leading-10 text-ink">
                 Dog It Up celebrates America&rsquo;s love affair with hot dogs
                 by bringing together regional favorites inspired by iconic
@@ -41,13 +50,16 @@ export default function AboutPage() {
                 Dog It Up delivers an authentic American experience with every
                 bite.
               </p>
-              <Button
-                href="/partner"
-                variant="filled"
-                className="!h-[82px] w-[287px] !rounded-none text-body-lg !font-bold"
-              >
-                Find out More
-              </Button>
+              </Reveal>
+              <Reveal variant="fadeUp" x={-24}>
+                <Button
+                  href="/partner"
+                  variant="filled"
+                  className="!h-[82px] w-[287px] !rounded-none text-body-lg !font-bold"
+                >
+                  Find out More
+                </Button>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -60,7 +72,7 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-      </main>
+      </PageEnter>
       <Footer />
     </div>
   );

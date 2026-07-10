@@ -34,9 +34,10 @@ const config: Config = {
       },
 
       fontFamily: {
-        // Inter is the only typeface in the design (weights 400 & 700).
-        // Pair with next/font: Inter({ subsets: ["latin"], variable: "--font-inter" })
-        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        // Loaded via next/font in app/fonts.ts (Passion One for display, Outfit for body)
+        sans: ["var(--font-outfit)", "Outfit", "system-ui", "sans-serif"],
+        body: ["var(--font-outfit)", "Outfit", "system-ui", "sans-serif"],
+        display: ["var(--font-passion-one)", "Passion One", "system-ui", "sans-serif"],
       },
 
       fontSize: {

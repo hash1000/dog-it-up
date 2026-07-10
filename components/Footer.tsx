@@ -1,5 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "@/components/motion/Reveal";
+import RevealGroup from "@/components/motion/RevealGroup";
+import {
+  InstagramIcon,
+  FacebookIcon,
+  TikTokIcon,
+} from "@/components/icons/SocialIcons";
 
 const columns = [
   {
@@ -28,71 +35,88 @@ const columns = [
   },
 ];
 
+const socials = [
+  { label: "Instagram", href: "#", Icon: InstagramIcon },
+  { label: "Facebook", href: "#", Icon: FacebookIcon },
+  { label: "TikTok", href: "#", Icon: TikTokIcon },
+];
+
+const footerLink =
+  "relative inline-block text-body text-char/70 transition-colors duration-150 hover:text-flame " +
+  "after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-left " +
+  "after:scale-x-0 after:bg-flame after:transition-transform after:duration-150 hover:after:scale-x-100";
+
 export default function Footer() {
   return (
-    <footer className="w-full bg-surface pt-16">
+    <footer className="w-full border-t border-char/10 bg-cream pt-16">
       <div className="mx-auto max-w-content px-6 md:px-12">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex flex-col gap-4 lg:col-span-1">
-            <Image
-              src="/assets/nav-bar-logo.jpg"
-              alt="Dog It Up"
-              width={48}
-              height={48}
-              className="h-12 w-12 rounded-full object-cover"
-            />
+        <RevealGroup className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal className="flex flex-col items-center gap-4 text-center sm:col-span-2 sm:items-start sm:text-left lg:col-span-1">
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/assets/logo-mark.svg"
+                alt=""
+                width={64}
+                height={34}
+                className="h-9 w-auto"
+              />
+              <span className="font-display text-h3 uppercase leading-none">
+                <span className="text-char">Dog</span>{" "}
+                <span className="text-flame">It Up</span>
+              </span>
+            </Link>
             <p className="text-body-lg">
-              <span className="font-bold text-ink">Taste America.</span>
-              <span className="block font-bold text-primary">One Dog at a time.</span>
+              <span className="font-bold text-char">Taste America.</span>
+              <span className="block font-bold text-flame">One Dog at a time.</span>
             </p>
-            <p className="text-caption text-ink-soft">
+            <p className="max-w-xs text-caption text-char/70">
               Hot dogs, Bold Flavors, Made fresh, Made to Crave.
             </p>
-            <div className="flex items-center gap-4">
-              <SocialIcon />
-              <SocialIcon />
-              <SocialIcon />
+            <div className="flex items-center gap-3">
+              {socials.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-char/20 text-char transition-[background-color,color,border-color,transform] duration-200 hover:scale-105 hover:border-flame hover:bg-flame hover:text-cream"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
-          </div>
+          </Reveal>
 
           {columns.map((col) => (
-            <div key={col.title} className="flex flex-col">
-              <h3 className="text-body-lg font-bold text-ink">{col.title}</h3>
-              <ul className="mt-2">
+            <Reveal key={col.title} className="flex flex-col items-center text-center sm:items-start sm:text-left">
+              <h3 className="text-body-lg font-bold text-char">{col.title}</h3>
+              <ul className="mt-4 flex flex-col gap-3">
                 {col.links.map((link) => (
-                  <li key={link.label} className="leading-[50px]">
-                    <Link href={link.href} className="text-body text-ink-soft hover:text-primary">
+                  <li key={link.label}>
+                    <Link href={link.href} className={footerLink}>
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           ))}
-        </div>
+        </RevealGroup>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-ink/10 py-8 leading-[50px] sm:flex-row">
-          <p className="text-body text-ink-soft">All rights reserved 2026</p>
+        <Reveal
+          variant="fadeIn"
+          className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-char/10 py-8 sm:flex-row"
+        >
+          <p className="text-body text-char/70">All rights reserved 2026</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-body text-ink-soft underline">
+            <Link href="#" className={footerLink}>
               Terms &amp; Conditions
             </Link>
-            <Link href="#" className="text-body text-ink-soft underline">
+            <Link href="#" className={footerLink}>
               Privacy Policy
             </Link>
           </div>
-        </div>
+        </Reveal>
       </div>
     </footer>
-  );
-}
-
-function SocialIcon() {
-  return (
-    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-ink/20 text-ink">
-      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    </span>
   );
 }
