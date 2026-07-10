@@ -106,10 +106,15 @@ export default function PartnerPage() {
         <section className="w-full bg-surface py-16 sm:py-[127px]">
           <div className="mx-auto flex max-w-content flex-col gap-16 px-6 sm:gap-[160px] md:px-12">
             <SectionTitleRow title="Why Operators Choose DOG IT UP" />
-            <RevealGroup className="mx-auto grid w-full max-w-[1069px] grid-cols-1 gap-x-[140px] gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+            <RevealGroup className="mx-auto grid w-full max-w-[1069px] grid-cols-1 justify-items-center gap-x-[140px] gap-y-16 sm:grid-cols-2 sm:justify-items-start lg:grid-cols-3">
               {benefits.map(({ title, description, icon: Icon }) => (
-                <Reveal key={title} className="flex max-w-[263px] flex-col">
-                  <Icon className="h-[50px] w-[50px] text-primary" />
+                <Reveal
+                  key={title}
+                  className="flex w-full max-w-[263px] flex-col items-center text-center sm:items-start sm:text-left"
+                >
+                  <Reveal as="span" variant="scalePop" className="inline-flex">
+                    <Icon className="h-[50px] w-[50px] text-primary" />
+                  </Reveal>
                   <h3 className="mt-8 max-w-[222px] text-[24px] font-bold leading-[34px] text-primary">
                     {title}
                   </h3>
