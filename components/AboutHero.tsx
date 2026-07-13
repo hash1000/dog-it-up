@@ -13,8 +13,8 @@
  *             zone, copy sits below it on cream.
  *
  * Mobile zone tuning (tweak here):
- * - Image zone height   h-[48dvh] (floor min-h-60 / 240px for landscape phones)
- * - objectPosition      MOBILE_POS = object-[50%_80%] — crops are 500×700
+ * - Image zone height   h-[45dvh] (floor min-h-60 / 240px for landscape phones)
+ * - objectPosition      MOBILE_POS = object-[50%_72%] — crops are 500×700
  *                       with the food at ~y55–70% and the hand below it, so
  *                       the focal point biases toward the bottom to keep the
  *                       full subject in a roughly square viewport window.
@@ -49,7 +49,7 @@
  *   crops bias up (y 35% / 30%).
  * - On md+ the hero is 85vh rather than full-dvh, so the container aspect
  *   stays near the ~2:1 source aspect and object-cover cropping is minimal
- *   at common desktop sizes. Below md the hero is min-h-dvh: the 48dvh image
+ *   at common desktop sizes. Below md the hero is min-h-dvh: the 45dvh image
  *   zone plus the cream copy zone fill the first screen together (and grow
  *   naturally past dvh on short landscape viewports).
  */
@@ -77,7 +77,7 @@ const WEB_POS: Record<number, string> = {
 };
 
 /** Mobile focal point — bottom-biased so food + hand stay fully in frame. */
-const MOBILE_POS = "object-[50%_80%]";
+const MOBILE_POS = "object-[50%_72%]";
 
 const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((i) => ({
   web: `/about/web/about-hero-${i}-web.webp`,
@@ -187,7 +187,7 @@ export default function AboutHero() {
      >
 
       {/* ————— Image zone: in-flow top band below md (48dvh), absolute full-bleed on md+ ————— */}
-      <div className="relative h-[48dvh] min-h-60 w-full shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto md:min-h-0">
+      <div className="relative h-[45dvh] min-h-60 w-full shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto md:min-h-0">
         {/* Ken Burns — mobile image zone only; desktop imagery is never scaled
             (see header). Origin sits at the subject so the zoom drifts into it. */}
         <motion.div
@@ -253,7 +253,7 @@ export default function AboutHero() {
           variants={staggerContainer(STAGGER.base, 0.1)}
           initial="hidden"
           animate="show"
-          className="flex max-w-[620px] flex-1 flex-col items-start justify-center gap-5 pb-20 pt-8 sm:gap-7 md:max-w-[48%] md:pb-28 md:pt-20"
+          className="flex max-w-[620px] flex-1 flex-col items-start justify-center gap-4 pb-16 pt-6 sm:gap-7 md:max-w-[48%] md:pb-28 md:pt-20"
         >
           <motion.p
             variants={reduced ? fadeIn : fadeUp}
@@ -266,7 +266,7 @@ export default function AboutHero() {
 
           <motion.h1
             variants={staggerContainer(STAGGER.base)}
-            className="font-display text-[clamp(48px,9vw,92px)] uppercase leading-[0.95] text-ink"
+            className="font-display text-[clamp(40px,9vw,92px)] uppercase leading-[0.95] text-ink"
           >
             <span className="sr-only">A Taste of America</span>
             <span aria-hidden className="flex flex-wrap gap-x-[0.28em]">
@@ -285,7 +285,7 @@ export default function AboutHero() {
 
           <motion.p
             variants={reduced ? fadeIn : fadeUp}
-            className="text-body font-medium leading-relaxed text-ink sm:text-body-lg sm:leading-9"
+            className="text-body font-medium leading-normal text-ink sm:text-body-lg sm:leading-9"
           >
             Dog It Up celebrates America&rsquo;s love affair with hot dogs by
             bringing together regional favorites inspired by iconic flavors
