@@ -4,15 +4,10 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 
-const HERO_IMAGES = [
-  "/about/1.webp",
-  "/about/2.webp",
-  "/about/3.webp",
-  "/about/4.webp",
-  "/about/5.webp",
-  "/about/6.webp",
-  "/about/7.webp",
-];
+const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((i) => ({
+  web: `/about/web/about-hero-${i}-web.webp`,
+  mobile: `/about/mobile/about-hero-${i}-mobile.webp`,
+}));
 
 const ROTATE_MS = 4000;
 
@@ -54,18 +49,31 @@ export default function AboutHero() {
   return (
     <section className="relative flex min-h-[70vh] w-full items-end overflow-hidden md:min-h-[85vh] md:items-center">
       {HERO_IMAGES.map((src, i) => (
-        <Image
-          key={src}
-          src={src}
-          alt="Hand holding a DOG IT UP menu item against a blue sky"
-          fill
-          sizes="100vw"
-          fetchPriority={i === 0 ? "high" : undefined}
-          loading={i === 0 ? "eager" : "lazy"}
-          className={`object-cover object-right transition-opacity duration-[800ms] ease-in-out ${
+        <div
+          key={src.web}
+          className={`absolute inset-0 transition-opacity duration-[800ms] ease-in-out ${
             i === active ? "opacity-100" : "opacity-0"
           }`}
-        />
+        >
+          <Image
+            src={src.mobile}
+            alt="Hand holding a DOG IT UP menu item against a blue sky"
+            fill
+            sizes="100vw"
+            fetchPriority={i === 0 ? "high" : undefined}
+            loading={i === 0 ? "eager" : "lazy"}
+            className="object-cover object-right md:hidden"
+          />
+          <Image
+            src={src.web}
+            alt="Hand holding a DOG IT UP menu item against a blue sky"
+            fill
+            sizes="100vw"
+            fetchPriority={i === 0 ? "high" : undefined}
+            loading={i === 0 ? "eager" : "lazy"}
+            className="hidden object-cover object-right md:block"
+          />
+        </div>
       ))}
 
       {/* Readability scrim: bottom-up on mobile, left-to-right on desktop */}
