@@ -33,6 +33,14 @@
 
   --animate-shimmer: shimmer 1.6s linear infinite;
   --animate-hero-fade-up: hero-fade-up 0.6s ease-out both;
+  /* Stats marquee: track is two identical halves, so -50% loops seamlessly */
+  --animate-marquee: marquee 28s linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   @keyframes hero-fade-up {
     from {
@@ -65,6 +73,19 @@
   /* Sticky header height: navbar row py-4 (32px) + h-9 logo (36px).
      Consumed by the hero (scroll offset) so the number lives in one place. */
   --header-h: 68px;
+}
+
+/* No-JS fallback: framer-motion SSRs its "hidden" variant as inline styles
+   (opacity: 0 / transform), which never resolves without scripting. Under
+   data-motion-fallback, any element carrying an inline style (i.e. a motion
+   element) is forced to its final visible state when scripting is off.
+   Class-based opacities (watermarks, crossfade slides) are untouched. */
+@media (scripting: none) {
+  [data-motion-fallback][style],
+  [data-motion-fallback] [style] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 body {

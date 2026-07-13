@@ -19,6 +19,7 @@ export default function PageEnter({ children, className }: PageEnterProps) {
 
   return (
     <motion.main
+      data-motion-fallback
       initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
       animate={reduced ? { opacity: 1 } : { opacity: 1, y: 0 }}
       transition={{ duration: DUR.fast, ease: EASE }}

@@ -53,7 +53,7 @@ export default function FeatureGrid() {
   );
 }
 
-function QualityIcon({ className }: { className?: string }) {
+export function QualityIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5L12 2Z" />
@@ -61,7 +61,7 @@ function QualityIcon({ className }: { className?: string }) {
   );
 }
 
-function FreshIcon({ className }: { className?: string }) {
+export function FreshIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5 21c9-1 14-6 14-15C10 7 5 12 5 21Z" />
@@ -70,7 +70,7 @@ function FreshIcon({ className }: { className?: string }) {
   );
 }
 
-function FlavorIcon({ className }: { className?: string }) {
+export function FlavorIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M12 22c4 0 6-2.5 6-6 0-3-2-4.5-2-4.5.5 2-1 3-1 3 .5-4-3-6-3-8.5-2 1.5-2.5 3.5-2.5 5.5-1-1-1-2.5-1-2.5C6 11 6 14 6 16c0 3.5 2 6 6 6Z" />
@@ -78,7 +78,7 @@ function FlavorIcon({ className }: { className?: string }) {
   );
 }
 
-function SpeedIcon({ className }: { className?: string }) {
+export function SpeedIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="9" />
