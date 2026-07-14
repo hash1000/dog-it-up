@@ -45,7 +45,7 @@ export default function Navbar() {
         >
           <Link href="/" className="flex items-center">
             <Image
-              src="/assets/nav-bar-logo.jpg"
+              src="/assets/logo.svg"
               alt="Dog It Up"
               width={120}
               height={40}

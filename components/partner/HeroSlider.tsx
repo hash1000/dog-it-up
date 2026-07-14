@@ -21,8 +21,8 @@
  * - Word stagger    STAGGER.base (0.08s) + POP_SPRING from lib/motion
  */
 
-import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { getImageProps } from "next/image";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import {
   AnimatePresence,
   motion,
@@ -42,7 +42,10 @@ import {
 } from "@/lib/motion";
 
 interface Slide {
-  src: string;
+  /** Wide crop (1799×874) shown at md+ viewports. */
+  desktop: string;
+  /** Portrait crop (500×700) shown below md. */
+  mobile: string;
   location: string;
   /**
    * Optional object-position utility (e.g. "object-[50%_35%]") for slides
@@ -53,17 +56,95 @@ interface Slide {
 }
 
 const SLIDES: readonly Slide[] = [
-  { src: "/partner/restaurant-counters.webp", location: "Restaurant Counters" },
-  { src: "/partner/food-courts-malls.webp", location: "Food Courts & Malls" },
-  { src: "/partner/gas-stations.webp", location: "Gas Stations & C-Stores" },
-  { src: "/partner/street-stalls-events.webp", location: "Street Stalls & Events" },
-  { src: "/partner/drive-thru.webp", location: "Drive-Thru Windows" },
+  {
+    desktop: "/partner/web/restaurant-counters.webp",
+    mobile: "/partner/mobile/restaurant-counters.webp",
+    location: "Restaurant Counters",
+  },
+  {
+    desktop: "/partner/web/food-courts-malls.webp",
+    mobile: "/partner/mobile/food-courts-malls.webp",
+    location: "Food Courts & Malls",
+  },
+  {
+    desktop: "/partner/web/gas-stations.webp",
+    mobile: "/partner/mobile/gas-stations.webp",
+    location: "Gas Stations & C-Stores",
+  },
+  {
+    // No wide export for this scene yet — the portrait crop stands in on
+    // desktop until a /partner/web version is added.
+    desktop: "/partner/mobile/street-stalls-events.webp",
+    mobile: "/partner/mobile/street-stalls-events.webp",
+    location: "Street Stalls & Events",
+  },
+  {
+    desktop: "/partner/web/drive-thru.webp",
+    mobile: "/partner/mobile/drive-thru.webp",
+    location: "Drive-Thru Windows",
+  },
 ] as const;
 
 const SLIDE_MS = 5000;
 const EXIT_DUR = 0.5;
 const CHIP_DELAY = 0.35;
 const SIZES = "100vw";
+/** Keep in sync with Tailwind's md breakpoint — drives both the <picture>
+    source switch and the `compact` layout flag. */
+const MOBILE_MEDIA = "(max-width: 767px)";
+
+const emptySubscribe = () => () => {};
+
+function subscribeToMobileMq(onChange: () => void) {
+  const mq = window.matchMedia(MOBILE_MEDIA);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+/**
+ * Art-directed slide image: the browser picks the portrait crop below md and
+ * the wide crop at md+ from a single <picture>, so only one variant downloads.
+ */
+function SlideImage({
+  slide,
+  eager = false,
+  className = "",
+}: {
+  slide: Slide;
+  eager?: boolean;
+  className?: string;
+}) {
+  const common = {
+    alt: `DOG IT UP at ${slide.location.toLowerCase()}`,
+    sizes: SIZES,
+    quality: 85,
+    loading: eager ? ("eager" as const) : undefined,
+  };
+  const {
+    props: { srcSet: mobileSrcSet },
+  } = getImageProps({ ...common, src: slide.mobile, width: 500, height: 700 });
+  const { props: desktopProps } = getImageProps({
+    ...common,
+    src: slide.desktop,
+    width: 1799,
+    height: 874,
+  });
+
+  return (
+    <picture>
+      <source media={MOBILE_MEDIA} srcSet={mobileSrcSet} />
+      {/* eslint-disable-next-line jsx-a11y/alt-text -- alt arrives via desktopProps */}
+      <img
+        {...desktopProps}
+        fetchPriority={eager ? "high" : undefined}
+        draggable={false}
+        className={`absolute inset-0 h-full w-full object-cover ${
+          slide.objectPosition ?? "object-center"
+        } ${className}`}
+      />
+    </picture>
+  );
+}
 
 const SLIDE_SPRING = {
   type: "spring",
@@ -184,18 +265,17 @@ export default function HeroSlider() {
   const [paused, setPaused] = useState(false);
   /** Bumped on manual navigation / resume so the timer + progress bar restart. */
   const [cycle, setCycle] = useState(0);
-  const [mounted, setMounted] = useState(false);
-  const [compact, setCompact] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const onChange = () => setCompact(mq.matches);
-    onChange();
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
+  // Hydration-safe: false on the server / first client render, true after.
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+  const compact = useSyncExternalStore(
+    subscribeToMobileMq,
+    () => window.matchMedia(MOBILE_MEDIA).matches,
+    () => false,
+  );
 
   const goTo = useCallback((target: number, dir: 1 | -1) => {
     const n = SLIDES.length;
@@ -246,11 +326,13 @@ export default function HeroSlider() {
       onTouchCancel={resume}
       className="relative flex min-h-[calc(100dvh-var(--header-h))] w-full flex-col overflow-hidden bg-ink"
     >
-      {/* Warm the cache for every slide after mount so transitions never flicker */}
+      {/* Warm the cache for every slide after mount so transitions never
+          flicker — the <picture> markup means only the variant for the
+          current viewport is fetched */}
       {mounted && (
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-0">
           {SLIDES.map((s) => (
-            <Image key={s.src} src={s.src} alt="" fill sizes={SIZES} loading="eager" />
+            <SlideImage key={s.location} slide={s} eager />
           ))}
         </div>
       )}
@@ -278,16 +360,7 @@ export default function HeroSlider() {
             transition={{ duration: 7, ease: "linear" }}
             className="absolute inset-0"
           >
-            <Image
-              src={slide.src}
-              alt={`DOG IT UP at ${slide.location.toLowerCase()}`}
-              fill
-              sizes={SIZES}
-              quality={85}
-              preload={index === 0}
-              className={`object-cover ${slide.objectPosition ?? "object-center"}`}
-              draggable={false}
-            />
+            <SlideImage slide={slide} eager={index === 0} />
           </motion.div>
         </motion.div>
       </AnimatePresence>
@@ -302,12 +375,11 @@ export default function HeroSlider() {
       {/* ————— Overlay content — pointer-events pass through to the slider
             except on interactive controls ————— */}
       <div className="pointer-events-none relative z-10 mx-auto flex w-full max-w-[1920px] flex-1 flex-col px-6 md:px-12 xl:px-gutter">
-        {/* Kinetic text block — anchored lower third on mobile, centered on md+ */}
         <motion.div
           variants={staggerContainer(STAGGER.base, 0.1)}
           initial="hidden"
           animate="show"
-          className="flex max-w-2xl flex-1 flex-col justify-end pb-10 pt-16 md:justify-center md:pb-16"
+          className="flex max-w-2xl flex-1 flex-col justify-start pb-10 pt-16 md:justify-center md:pb-16"
         >
           <motion.p
             variants={reduced ? fadeIn : fadeUp}
@@ -386,8 +458,6 @@ export default function HeroSlider() {
             </Button>
           </motion.div>
         </motion.div>
-
-        {/* ————— Bottom control bar: chip + pills left, arrows right ————— */}
         <motion.div
           variants={reduced ? fadeIn : fadeUp}
           initial="hidden"
@@ -395,7 +465,6 @@ export default function HeroSlider() {
           className="flex items-end justify-between gap-6 pb-6 md:pb-8"
         >
           <div className="flex flex-col gap-4">
-            {/* Glass location tag chip — re-pops on each slide change */}
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={slide.location}
@@ -417,8 +486,6 @@ export default function HeroSlider() {
                 {slide.location}
               </motion.div>
             </AnimatePresence>
-
-            {/* Progress pills — active bar fills over the slide duration */}
             <div
               className="pointer-events-auto flex items-center gap-2"
               role="tablist"
@@ -428,7 +495,7 @@ export default function HeroSlider() {
                 const active = i === index;
                 return (
                   <button
-                    key={s.src}
+                    key={s.location}
                     type="button"
                     role="tab"
                     aria-selected={active}
@@ -455,8 +522,6 @@ export default function HeroSlider() {
               })}
             </div>
           </div>
-
-          {/* Prev / next arrows — glass buttons, thumb-reachable on mobile */}
           <div className="pointer-events-auto flex shrink-0 gap-3">
             <button
               type="button"
