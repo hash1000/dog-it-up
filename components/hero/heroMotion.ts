@@ -19,6 +19,8 @@ import type { Variants } from "framer-motion";
 export const TIMING = {
   art: 0,
   image: 0.3,
+  /** First HeroShowcase flavor rises in just after the backdrop settles. */
+  showcase: 0.5,
   subtext: 1.0,
   cta: 1.15,
   ctaPulse: 1.65,

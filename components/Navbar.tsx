@@ -36,7 +36,9 @@ export default function Navbar() {
           : "bg-surface"
       }`}
     >
-      <div className="mx-auto flex w-full max-w-[1920px] items-center justify-between px-6 py-4 md:px-12 xl:px-gutter">
+      {/* Row height comes from --header-h so layout offsets (hero min-h,
+          scroll margins) can never drift from the real navbar height. */}
+      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-[1920px] items-center justify-between px-6 md:px-12 xl:px-gutter">
         <motion.div
           variants={fadeIn}
           initial="hidden"

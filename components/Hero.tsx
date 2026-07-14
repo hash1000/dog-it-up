@@ -5,6 +5,7 @@ import HeroFeature from "./hero/HeroFeature";
 import HeroFeatures from "./hero/HeroFeatures";
 import HeroItem from "./hero/HeroItem";
 import HeroSequence from "./hero/HeroSequence";
+import HeroShowcase from "./hero/HeroShowcase";
 import { FlameIcon, LeafIcon, MeatIcon } from "./Icons";
 
 const features = [
@@ -16,32 +17,37 @@ const features = [
 
 export default function Hero() {
   return (
-    <section className="relative w-full scroll-mt-[var(--header-h)] overflow-x-clip py-8 sm:py-10 lg:pt-14 lg:pb-40">
-      <HeroSequence className="relative mx-auto hidden w-full max-w-[1920px] lg:flex lg:aspect-[1440/700]">
+    <section className="relative flex min-h-[calc(100dvh-var(--header-h))] w-full flex-col scroll-mt-[var(--header-h)] overflow-x-clip mb-8">
+      {/* Sky backdrop shared by both layouts — fills the full-dvh section.
+          Own sequence root so the image beat still fades in on mount. */}
+      <HeroSequence className="absolute inset-0">
         <HeroItem beat="image" className="absolute inset-0">
           <Image
-            src="/hero/hero-Image.webp"
-            alt="Assortment of DOG IT UP signature hot dogs"
+            src="/hero/background.webp"
+            alt=""
             fill
-            priority
-            sizes="(min-width: 1920px) 1920px, 100vw"
-            className="object-cover "
+            preload
+            sizes="100vw"
+            className="object-cover"
           />
         </HeroItem>
+      </HeroSequence>
+
+      <HeroSequence className="relative mx-auto hidden w-full max-w-[1920px] flex-1 lg:flex">
 
         {/* Text column per Figma: x:100 (shared gutter with navbar logo),
             y:303→962 of the 1076 frame — vertically centered */}
         {/* In normal flow (not absolute) so the hero box can grow taller than
             the 1440/700 aspect if the text stack needs it — never clips. */}
         <div className="relative flex w-full flex-col justify-center px-6 py-12 md:px-12 xl:px-gutter">
-          <div className="flex max-w-[60%] flex-col items-start">
+          <div className="flex max-w-[55%] flex-col items-start">
             <HeroItem beat="art">
               <Image
                 src="/assets/typo-hero.svg"
                 alt="Taste America. One Dog At A Time."
                 width={533}
                 height={353}
-                priority
+                preload
                 className="h-auto w-[clamp(360px,37vw,533px)] min-[1920px]:w-[710px]"
               />
             </HeroItem>
@@ -83,18 +89,21 @@ export default function Hero() {
             </HeroFeatures>
           </div>
         </div>
+
+        {/* Rotating flavor showcase — hand meets the hero's bottom edge. */}
+        <HeroShowcase className="absolute bottom-0 right-[4%] hidden w-[clamp(340px,34vw,520px)] lg:block min-[1920px]:right-[6%]" />
       </HeroSequence>
 
-      {/* Below lg: text block above, image below cropped to the hot-dog zone */}
-      <HeroSequence className="flex flex-col lg:hidden">
-        <div className="flex flex-col items-start px-6 py-12 sm:px-10">
+      {/* Below lg: sky backdrop behind the whole stack, showcase under text */}
+      <HeroSequence className="relative flex flex-1 flex-col lg:hidden">
+        <div className="relative flex flex-col items-start px-6 pt-12 pb-8 sm:px-10">
           <HeroItem beat="art">
             <Image
               src="/assets/typo-hero.svg"
               alt="Taste America. One Dog At A Time."
               width={533}
               height={353}
-              priority
+              preload
               className="h-auto w-[clamp(280px,55vw,480px)] max-w-full"
             />
           </HeroItem>
@@ -116,7 +125,7 @@ export default function Hero() {
             </Button>
           </HeroCta>
           <HeroFeatures className="mt-8 flex flex-wrap justify-content items-center gap-x-4 gap-y-3">
-            {features.map(({ label, icon: Icon }, i) => (
+            {features.map(({ label, icon: Icon }) => (
               <span key={label} className="flex items-center gap-x-3">
                 <HeroFeature
                   className="flex items-center gap-2 text-body-lg font-normal text-ink-soft"
@@ -128,19 +137,7 @@ export default function Hero() {
             ))}
           </HeroFeatures>
         </div>
-        <HeroItem
-          beat="image"
-          className="relative aspect-square w-full sm:aspect-[16/9]"
-        >
-          <Image
-            src="/hero/hero-Image.webp"
-            alt="Assortment of DOG IT UP signature hot dogs"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-right"
-          />
-        </HeroItem>
+        <HeroShowcase className="relative mx-auto mt-auto w-full max-w-[420px] px-6 sm:max-w-[460px]" />
       </HeroSequence>
     </section>
   );

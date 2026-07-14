@@ -1,89 +1,51 @@
 "use client";
-
-/**
- * About hero — full-bleed rotating sky imagery with kinetic headline.
- *
- * Art direction: each slot has a mobile crop (below md) and a web crop (md+),
- * toggled with hidden/md:block on two <Image>s — same pattern as the menu page.
- *
- * Layout split at md:
- * - md+:      unchanged approved desktop layout — absolute full-bleed image,
- *             left scrim, copy left-centered over the sky.
- * - below md: split zones, no text over the subject. Image is an in-flow top
- *             zone, copy sits below it on cream.
- *
- * Mobile zone tuning (tweak here):
- * - Image zone height   h-[45dvh] (floor min-h-60 / 240px for landscape phones)
- * - objectPosition      MOBILE_POS = object-[50%_72%] — crops are 500×700
- *                       with the food at ~y55–70% and the hand below it, so
- *                       the focal point biases toward the bottom to keep the
- *                       full subject in a roughly square viewport window.
- * - Seam                h-16 transparent→cream gradient over the image's
- *                       bottom edge, fading into the cream content zone.
- * - Ken Burns           image stack scales 1→1.06 over 16s (reverse repeat),
- *                       mobile only, origin biased toward the subject;
- *                       disabled for prefers-reduced-motion.
- *
- * Scrim (tweak here):
- * - Desktop: surface/65 → transparent across the left 60% (text sits left);
- *   mobile needs no scrim — text never overlaps imagery.
- *
- * Animation timing (kept in step with the Partner hero):
- * - ROTATE_MS     5000ms  crossfade interval (Partner SLIDE_MS)
- * - Crossfade     800ms   opacity-only between slides
- * - Entrance      staggerContainer(STAGGER.base = 0.08s, delayChildren 0.1s)
- * - Words         POP_SPRING (stiffness 320) with damping 22; travel 14px
- *                 on mobile / 28px on md+ (same values as Partner wordY)
- * - Parallax      currently disabled (the translateY-only wrapper is kept
- *                 commented in the JSX). If re-enabled: translateY ONLY,
- *                 drift ≤ 6%, bleed the layer above by ≥ the drift — never
- *                 animate scale on the hero imagery. There is deliberately
- *                 no Ken Burns zoom either: the source crops are ~2:1
- *                 banners and any scale pushes the subject out of frame.
- * - Scroll cue    chevron bounces y 0 → 8 → 0 over 1.6s, infinite
- *
- * Image framing (tweak in HERO_IMAGES):
- * - Web crops are 1440×700 with the hand + food centred at ~x70%; default
- *   focal point object-[70%_45%] keeps the subject in the right ~55% of the
- *   frame with sky headroom. Fries (6) and cup (7) reach higher, so their
- *   crops bias up (y 35% / 30%).
- * - On md+ the hero is 85vh rather than full-dvh, so the container aspect
- *   stays near the ~2:1 source aspect and object-cover cropping is minimal
- *   at common desktop sizes. Below md the hero is min-h-dvh: the 45dvh image
- *   zone plus the cream copy zone fill the first screen together (and grow
- *   naturally past dvh on short landscape viewports).
- */
-
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
+  useInView,
   useReducedMotion,
   useScroll,
   useTransform,
   type Variants,
 } from "framer-motion";
 import Button from "@/components/Button";
-import { fadeIn, fadeUp, POP_SPRING, STAGGER, staggerContainer } from "@/lib/motion";
+import {
+  DUR,
+  EASE,
+  fadeIn,
+  fadeUp,
+  POP_SPRING,
+  STAGGER,
+  staggerContainer,
+} from "@/lib/motion";
 
 /**
- * Per-slide focal points (Tailwind object-position classes, so v4 can see the
- * literal strings). Subject centre sits at ~x70% in every web crop; slides 6
- * (fries) and 7 (cup) extend higher, so their crops bias toward the top.
+ * Focal points (Tailwind object-position classes, so v4 can see the literal
+ * strings). Every web crop shares the same diner composition — subject at
+ * ~x70%, food at ~y45% — so one class covers the set. Mobile crops are
+ * bottom-biased so the face + food stay in frame inside the 45dvh band.
  */
-const WEB_POS: Record<number, string> = {
-  6: "object-[70%_35%]",
-  7: "object-[70%_30%]",
-};
+const WEB_POS = "object-[70%_45%]";
+const MOBILE_POS = "object-[50%_68%]";
 
-/** Mobile focal point — bottom-biased so food + hand stay fully in frame. */
-const MOBILE_POS = "object-[50%_72%]";
-
-const HERO_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((i) => ({
-  web: `/about/web/about-hero-${i}-web.webp`,
-  mobile: `/about/mobile/about-hero-${i}-mobile.webp`,
-  webPos: WEB_POS[i] ?? "object-[70%_45%]",
-  mobilePos: MOBILE_POS,
+/**
+ * The mobile exports are numbered on a different order than the web ones
+ * (mobile set starts at web slide 6), so each slide pairs its web index with
+ * the mobile file that shows the same person/item.
+ */
+const HERO_IMAGES = [
+  { website: 1, mobile: 3, alt: "Chili cheese dog topped with bacon crumbles" },
+  { website: 2, mobile: 4, alt: "Classic hot dog with relish, mustard and ketchup" },
+  { website: 3, mobile: 5, alt: "Loaded crinkle-cut fries with chili, cheese and onion" },
+  { website: 4, mobile: 6, alt: "Chili cheese dog topped with jalapenos and onion" },
+  { website: 5, mobile: 7, alt: "Hot dog with pickles, mustard and barbecue sauce" },
+  { website: 6, mobile: 1, alt: "Iced lemonade in a DOG IT UP cup" },
+  { website: 7, mobile: 2, alt: "Mac and cheese dog topped with bacon crumbles" },
+].map(({ website, mobile, alt }) => ({
+  web: `/about/website/about-hero-${website}-web.webp`,
+  mobile: `/about/mobile/about-hero-${mobile}-mobile.webp`,
+  alt: `Smiling person holding out a giant ${alt.charAt(0).toLowerCase()}${alt.slice(1)} in a retro diner`,
 }));
 
 const ROTATE_MS = 5000;
@@ -142,6 +104,10 @@ export default function AboutHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
   const [compact, setCompact] = useState(false);
+  // Bumped when the user picks a dot, so the rotation timer restarts from
+  // the chosen slide instead of cutting it short mid-interval.
+  const [timerKey, setTimerKey] = useState(0);
+  const inView = useInView(sectionRef, { amount: 0.25 });
 
   // Background parallax: as the hero scrolls out, the image layer drifts
   // down 6% of its own (7%-bled) height, so it appears to scroll slower.
@@ -160,78 +126,80 @@ export default function AboutHero() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  // Rotation only runs while the hero is meaningfully on screen and motion
+  // is allowed; timerKey restarts the interval after a manual dot pick.
   useEffect(() => {
-    const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMq.matches) return;
-
+    if (reduced || !inView) return;
     const id = setInterval(
       () => setActive((i) => (i + 1) % HERO_IMAGES.length),
       ROTATE_MS,
     );
-    const onChange = () => {
-      if (reducedMq.matches) clearInterval(id);
-    };
-    reducedMq.addEventListener("change", onChange);
-    return () => {
-      clearInterval(id);
-      reducedMq.removeEventListener("change", onChange);
-    };
-  }, []);
+    return () => clearInterval(id);
+  }, [reduced, inView, timerKey]);
+
+  const goTo = (i: number) => {
+    setActive(i);
+    setTimerKey((k) => k + 1);
+  };
 
   const wordY = compact ? 14 : 28;
 
   return (
      <section
        ref={sectionRef}
-       className="relative flex min-h-dvh w-full flex-col overflow-hidden md:min-h-[85vh] md:flex-row md:items-center"
+       className="relative flex min-h-[calc(100dvh-var(--header-h))] w-full flex-col overflow-hidden md:flex-row md:items-center"
      >
 
       {/* ————— Image zone: in-flow top band below md (48dvh), absolute full-bleed on md+ ————— */}
-      <div className="relative h-[45dvh] min-h-60 w-full shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto md:min-h-0">
-        {/* Ken Burns — mobile image zone only; desktop imagery is never scaled
-            (see header). Origin sits at the subject so the zoom drifts into it. */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: DUR.slow, ease: EASE } }}
+        className="relative h-[45dvh] min-h-60 w-full shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto md:min-h-0"
+      >
+        {/* Ken Burns — slow zoom on every breakpoint. Origin sits at the
+            subject so the zoom drifts into it. */}
         <motion.div
           className="absolute inset-0 origin-[50%_70%]"
-          animate={compact && !reduced ? { scale: 1.06 } : { scale: 1 }}
+          animate={reduced ? { scale: 1 } : { scale: 1.06 }}
           transition={
-            compact && !reduced
-              ? { duration: 16, repeat: Infinity, repeatType: "reverse", ease: "linear" }
-              : { duration: 0.3 }
+            reduced
+              ? { duration: 0.3 }
+              : { duration: 16, repeat: Infinity, repeatType: "reverse", ease: "linear" }
           }
         >
-          {/* ————— Parallax image stack: translateY only, bled 7% above to cover the 6% drift ————— */}
-          {/* <motion.div
-            style={reduced ? undefined : { y: parallaxY }}
-            className="absolute inset-x-0 top-[-7%] bottom-0"
-            aria-hidden={false}
-          > */}
-          {HERO_IMAGES.map((src, i) => (
-            <div
-              key={src.web}
-              className={`absolute inset-0 transition-opacity duration-[800ms] ease-in-out ${
-                i === active ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={src.mobile}
-                alt="Hand holding a DOG IT UP menu item against a blue sky"
-                fill
-                sizes="100vw"
-                priority={i === 0}
-                className={`object-cover md:hidden ${src.mobilePos}`}
-              />
-              <Image
-                src={src.web}
-                alt="Hand holding a DOG IT UP menu item against a blue sky"
-                fill
-                sizes="100vw"
-                fetchPriority={i === 0 ? "high" : undefined}
-                loading={i === 0 ? "eager" : "lazy"}
-                className={`hidden object-cover md:block ${src.webPos}`}
-              />
-            </div>
-          ))}
-          {/* </motion.div> */}
+          {/* ————— Parallax image stack (md+): translateY only, bled 7% above to cover the 6% drift ————— */}
+          <motion.div
+            style={reduced || compact ? undefined : { y: parallaxY }}
+            className="absolute inset-x-0 bottom-0 top-0 md:top-[-7%]"
+          >
+            {HERO_IMAGES.map((src, i) => (
+              <div
+                key={src.web}
+                className={`absolute inset-0 transition-opacity duration-800 ease-in-out ${
+                  i === active ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <Image
+                  src={src.mobile}
+                  alt={src.alt}
+                  fill
+                  sizes="100vw"
+                  fetchPriority={i === 0 ? "high" : undefined}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  className={`object-cover md:hidden ${MOBILE_POS}`}
+                />
+                <Image
+                  src={src.web}
+                  alt={src.alt}
+                  fill
+                  sizes="100vw"
+                  fetchPriority={i === 0 ? "high" : undefined}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  className={`hidden object-cover md:block ${WEB_POS}`}
+                />
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* Seam: fade the image's bottom edge into the cream content zone (mobile only) */}
@@ -239,11 +207,30 @@ export default function AboutHero() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-cream md:hidden"
           aria-hidden="true"
         />
-      </div>
 
-      {/* ————— Readability scrim, md+ only — mobile text never overlaps imagery ————— */}
+        {/* ————— Slide dots: above the seam on mobile, bottom-right over the floor on md+ ————— */}
+        <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 md:bottom-8 md:left-auto md:right-10 md:translate-x-0">
+          {HERO_IMAGES.map((src, i) => (
+            <button
+              key={src.web}
+              type="button"
+              onClick={() => goTo(i)}
+              aria-label={`Go to slide ${i + 1} of ${HERO_IMAGES.length}`}
+              aria-current={i === active}
+              className={`h-2 rounded-full shadow-[0_1px_4px_rgba(28,25,23,0.25)] transition-all duration-300 ease-in-out ${
+                i === active
+                  ? "w-7 bg-primary"
+                  : "w-2 bg-surface/80 hover:bg-surface"
+              }`}
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* ————— Readability scrim, md+ only — cream-tinted so it melts into the
+          diner wall instead of greying it; mobile text never overlaps imagery ————— */}
       <div
-        className="absolute inset-y-0 left-0 hidden w-[60%] bg-linear-to-r from-surface/65 via-surface/30 to-transparent md:block"
+        className="absolute inset-y-0 left-0 hidden w-[60%] bg-linear-to-r from-cream/85 via-cream/40 to-transparent md:block"
         aria-hidden="true"
       />
 
