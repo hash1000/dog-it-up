@@ -97,7 +97,7 @@ export default function Hero() {
         <div className="relative flex flex-col items-start px-6 pt-12 pb-8 sm:px-10">
           <HeroItem beat="art">
             <Image
-              src="/assets/typo-hero.svg"
+              src="/assets/hero-image.svg"
               alt="Taste America. One Dog At A Time."
               width={533}
               height={353}
