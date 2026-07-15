@@ -395,22 +395,7 @@ export default function HeroSlider() {
             aria-live="polite"
             className="mt-6 flex flex-wrap items-baseline gap-x-2 text-body-lg text-cream/80"
           >
-            Perfect for
-            <span aria-hidden>→</span>
-            <span className="inline-flex overflow-hidden font-bold text-accent">
-              <AnimatePresence mode="popLayout" initial={false}>
-                <motion.span
-                  key={slide.location}
-                  variants={reduced ? slideFadeVariants : rollVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  className="inline-block whitespace-nowrap"
-                >
-                  {slide.location}
-                </motion.span>
-              </AnimatePresence>
-            </span>
+            Franchising And Licensing opportunities Available
           </motion.p>
 
           <motion.div

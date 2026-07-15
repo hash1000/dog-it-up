@@ -108,11 +108,43 @@ export const drinks: MenuItem[] = [
     description: "Regular or Large",
   },
   {
+    slug: "strawberry-lemonade",
+    name: "Strawberry Lemonade",
+    tagline: "Lemonade's summer crush.",
+    image: "/menu/strawberry-lemonade.webp",
+    description:
+      "Fresh-squeezed lemonade shaken with sweet strawberry, served over ice. Regular or Large",
+    badge: "New",
+  },
+  {
     slug: "fountain-drinks",
     name: "Fountain Drinks",
     tagline: "Ice cold, endlessly fizzy.",
     image: "/menu/fountain-drinks.webp",
     description: "Regular or Large",
+  },
+  {
+    slug: "lemon-fountain-drink",
+    name: "Lemon-Lime Fizz",
+    tagline: "Crisp citrus, straight off the tap.",
+    image: "/menu/lemon-fountain-drink.webp",
+    description:
+      "Sparkling lemon-lime soda poured over a mountain of ice. Regular or Large",
+  },
+  {
+    slug: "orange-fountain-drink",
+    name: "Orange Fizz",
+    tagline: "Bold, bubbly and bright orange.",
+    image: "/menu/orange-fountain-drink.webp",
+    description:
+      "Ice-cold orange soda with big citrus flavor in every sip. Regular or Large",
+  },
+  {
+    slug: "bottled-water",
+    name: "Bottled Water",
+    tagline: "Pure, chilled, zero fuss.",
+    image: "/menu/water.webp",
+    description: "Premium drinking water, 500ml bottle.",
   },
 ];
 

@@ -63,7 +63,7 @@ export default function MenuCard({
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             onLoad={() => setLoaded(true)}
-            className={`object-contain transition-transform duration-300 ease-out ${
+            className={`object-contain mix-blend-multiply transition-transform duration-300 ease-out ${
               reduceMotion ? "" : "group-hover:-rotate-2 group-hover:scale-[1.06]"
             }`}
           />
