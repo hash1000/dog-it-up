@@ -104,14 +104,14 @@ export const drinks: MenuItem[] = [
     slug: "lemonade",
     name: "Lemonade",
     tagline: "Sunshine, squeezed and iced.",
-    image: "/menu/lemonade.webp",
+    image: "/menu/lemonade-new.webp",
     description: "Regular or Large",
   },
   {
     slug: "strawberry-lemonade",
     name: "Strawberry Lemonade",
     tagline: "Lemonade's summer crush.",
-    image: "/menu/strawberry-lemonade.webp",
+    image: "/menu/strawberry-lemonade-new.webp",
     description:
       "Fresh-squeezed lemonade shaken with sweet strawberry, served over ice. Regular or Large",
     badge: "New",
@@ -127,7 +127,7 @@ export const drinks: MenuItem[] = [
     slug: "lemon-fountain-drink",
     name: "Lemon-Lime Fizz",
     tagline: "Crisp citrus, straight off the tap.",
-    image: "/menu/lemon-fountain-drink.webp",
+    image: "/menu/lemon-fountain-drink-new.webp",
     description:
       "Sparkling lemon-lime soda poured over a mountain of ice. Regular or Large",
   },
@@ -135,7 +135,7 @@ export const drinks: MenuItem[] = [
     slug: "orange-fountain-drink",
     name: "Orange Fizz",
     tagline: "Bold, bubbly and bright orange.",
-    image: "/menu/orange-fountain-drink.webp",
+    image: "/menu/orange-fountain-drink-new.webp",
     description:
       "Ice-cold orange soda with big citrus flavor in every sip. Regular or Large",
   },
@@ -143,7 +143,7 @@ export const drinks: MenuItem[] = [
     slug: "bottled-water",
     name: "Bottled Water",
     tagline: "Pure, chilled, zero fuss.",
-    image: "/menu/water.webp",
+    image: "/menu/water-new.webp",
     description: "Premium drinking water, 500ml bottle.",
   },
 ];
