@@ -18,8 +18,6 @@ const features = [
 export default function Hero() {
   return (
     <section className="relative flex min-h-[calc(100dvh-var(--header-h))] w-full flex-col scroll-mt-[var(--header-h)] overflow-x-clip mb-8">
-      {/* Sky backdrop shared by both layouts — fills the full-dvh section.
-          Own sequence root so the image beat still fades in on mount. */}
       <HeroSequence className="absolute inset-0">
         <HeroItem beat="image" className="absolute inset-0">
           <Image
@@ -43,7 +41,7 @@ export default function Hero() {
           <div className="flex max-w-[55%] flex-col items-start">
             <HeroItem beat="art">
               <Image
-                src="/assets/typo-hero.svg"
+                src="/assets/hero-image.svg"
                 alt="Taste America. One Dog At A Time."
                 width={533}
                 height={353}

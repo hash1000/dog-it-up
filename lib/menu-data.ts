@@ -9,6 +9,7 @@ export interface MenuItem {
 }
 
 export interface MenuSectionData {
+  key: string;
   title: string;
   items: MenuItem[];
 }
@@ -116,7 +117,7 @@ export const drinks: MenuItem[] = [
 ];
 
 export const menuSections: MenuSectionData[] = [
-  { title: "Signature Dogs", items: signatureDogs },
-  { title: "Sides", items: sides },
-  { title: "Drinks", items: drinks },
+  { key: "signature-dogs", title: "Signature Dogs", items: signatureDogs },
+  { key: "sides", title: "Sides", items: sides },
+  { key: "drinks", title: "Drinks", items: drinks },
 ];

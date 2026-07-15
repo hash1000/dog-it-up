@@ -12,11 +12,9 @@ const columns = [
   {
     title: "Menu",
     links: [
-      { label: "All Menu", href: "/menu" },
-      { label: "Signature Dogs", href: "/menu" },
-      { label: "Sides", href: "/menu" },
-      { label: "Drinks", href: "/menu" },
-      { label: "Combos", href: "/menu" },
+      { label: "Signature Dogs", href: "/menu#signature-dogs" },
+      { label: "Sides", href: "/menu#sides" },
+      { label: "Drinks", href: "/menu#drinks" },
     ],
   },
   {
@@ -49,7 +47,7 @@ const footerLink =
 export default function Footer() {
   return (
     <footer className="w-full border-t border-char/10 bg-cream pt-16">
-      <div className="mx-auto max-w-content px-6 md:px-12">
+      <div className="mx-auto max-w-[1440px] sm:px-5">
         <RevealGroup className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           <Reveal className="flex flex-col items-center gap-4 text-center sm:col-span-2 sm:items-start sm:text-left lg:col-span-1">
             <Link href="/" className="flex items-center gap-3">

@@ -72,13 +72,6 @@ const SLIDES: readonly Slide[] = [
     location: "Gas Stations & C-Stores",
   },
   {
-    // No wide export for this scene yet — the portrait crop stands in on
-    // desktop until a /partner/web version is added.
-    desktop: "/partner/mobile/street-stalls-events.webp",
-    mobile: "/partner/mobile/street-stalls-events.webp",
-    location: "Street Stalls & Events",
-  },
-  {
     desktop: "/partner/web/drive-thru.webp",
     mobile: "/partner/mobile/drive-thru.webp",
     location: "Drive-Thru Windows",
@@ -89,8 +82,6 @@ const SLIDE_MS = 5000;
 const EXIT_DUR = 0.5;
 const CHIP_DELAY = 0.35;
 const SIZES = "100vw";
-/** Keep in sync with Tailwind's md breakpoint — drives both the <picture>
-    source switch and the `compact` layout flag. */
 const MOBILE_MEDIA = "(max-width: 767px)";
 
 const emptySubscribe = () => () => {};
@@ -101,10 +92,6 @@ function subscribeToMobileMq(onChange: () => void) {
   return () => mq.removeEventListener("change", onChange);
 }
 
-/**
- * Art-directed slide image: the browser picks the portrait crop below md and
- * the wide crop at md+ from a single <picture>, so only one variant downloads.
- */
 function SlideImage({
   slide,
   eager = false,
@@ -133,7 +120,6 @@ function SlideImage({
   return (
     <picture>
       <source media={MOBILE_MEDIA} srcSet={mobileSrcSet} />
-      {/* eslint-disable-next-line jsx-a11y/alt-text -- alt arrives via desktopProps */}
       <img
         {...desktopProps}
         fetchPriority={eager ? "high" : undefined}
@@ -153,11 +139,6 @@ const SLIDE_SPRING = {
   mass: 0.9,
 } as const;
 
-/**
- * Direction-aware full-viewport transition: short travel (18% in / 12% out)
- * with crossfade + scale 1.08 → 1 so full-screen images feel cinematic
- * rather than like sliding cards.
- */
 const slideVariants: Variants = {
   enter: (dir: 1 | -1) => ({
     x: dir > 0 ? "18%" : "-18%",
@@ -184,14 +165,12 @@ const slideVariants: Variants = {
   }),
 };
 
-/** Reduced-motion fallback: crossfade only. */
 const slideFadeVariants: Variants = {
   enter: { opacity: 0, zIndex: 2 },
   center: { opacity: 1, zIndex: 2, transition: { duration: DUR.base } },
   exit: { opacity: 0, zIndex: 1, transition: { duration: DUR.base } },
 };
 
-/** Vertical roll for the per-slide location name in the sub-line. */
 const rollVariants: Variants = {
   enter: { y: "110%", opacity: 0 },
   center: {
@@ -206,7 +185,6 @@ const rollVariants: Variants = {
   },
 };
 
-/** Headline words spring up; `custom` carries the y-distance (smaller on mobile). */
 const wordVariants: Variants = {
   hidden: (y: number) => ({ opacity: 0, y }),
   show: {
@@ -263,9 +241,7 @@ export default function HeroSlider() {
   const reduced = useReducedMotion();
   const [[index, direction], setSlide] = useState<[number, 1 | -1]>([0, 1]);
   const [paused, setPaused] = useState(false);
-  /** Bumped on manual navigation / resume so the timer + progress bar restart. */
   const [cycle, setCycle] = useState(0);
-  // Hydration-safe: false on the server / first client render, true after.
   const mounted = useSyncExternalStore(
     emptySubscribe,
     () => true,
@@ -326,9 +302,6 @@ export default function HeroSlider() {
       onTouchCancel={resume}
       className="relative flex min-h-[calc(100dvh-var(--header-h))] w-full flex-col overflow-hidden bg-ink"
     >
-      {/* Warm the cache for every slide after mount so transitions never
-          flicker — the <picture> markup means only the variant for the
-          current viewport is fetched */}
       {mounted && (
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-0">
           {SLIDES.map((s) => (
@@ -353,7 +326,6 @@ export default function HeroSlider() {
           onDragEnd={onDragEnd}
           className="absolute inset-0 touch-pan-y"
         >
-          {/* Ken Burns layer — slow push-in per slide */}
           <motion.div
             initial={{ scale: 1 }}
             animate={{ scale: reduced ? 1 : 1.06 }}

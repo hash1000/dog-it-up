@@ -25,7 +25,8 @@ export default function Home() {
             />
             {menuSections.map((section) => (
               <MenuSection
-                key={section.title}
+                key={section.key}
+                id={section.key}
                 title={section.title}
                 items={section.items}
               />

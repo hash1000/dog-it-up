@@ -76,35 +76,21 @@ export default function MenuHeroGrid({ active, onSelect }: MenuHeroGridProps) {
               }`}
             />
 
-            {/* Bottom scrim so the label pill stays readable on busy imagery */}
-            <div
-              className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-char/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              aria-hidden="true"
-            />
-
             <span
-              className={`absolute bottom-4 left-4 flex items-center gap-2 rounded-full px-4 py-2 font-display text-body font-black uppercase tracking-wide transition-colors duration-300 sm:bottom-5 sm:left-5 ${
+              className={`absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full px-4 py-2 font-display text-3xl font-black uppercase tracking-wide transition-colors duration-300 ${
                 isActive
                   ? "bg-mustard text-char"
                   : "bg-cream/90 text-char group-hover:bg-mustard"
               }`}
             >
               {tile.label}
-              <motion.span
-                aria-hidden="true"
-                animate={
-                  reduceMotion
-                    ? undefined
-                    : isActive
-                      ? { rotate: [0, -12, 10, 0] }
-                      : { rotate: 0 }
-                }
-                transition={{ duration: DUR.base, ease: EASE }}
-                className="inline-block"
-              >
-                {isActive ? "🔥" : "→"}
-              </motion.span>
             </span>
+
+            {/* Bottom scrim so the label pill stays readable on busy imagery */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-char/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              aria-hidden="true"
+            />
           </motion.button>
         );
       })}

@@ -278,7 +278,7 @@ export default function AboutHero() {
             bringing together regional favorites inspired by iconic flavors
             from across the country. Every hot dog starts with a premium
             all-beef hot dog served on a fresh bakery bun and is topped with
-            bold, familiar ingredients that guests know and love.
+            bold, familiar ingredients you know and love.
           </motion.p>
 
           <motion.div variants={reduced ? fadeIn : fadeUp}>

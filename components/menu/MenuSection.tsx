@@ -3,13 +3,14 @@ import MenuCard from "@/components/menu/MenuCard";
 import SectionTitleRow from "@/components/shared/SectionTitleRow";
 
 export interface MenuSectionProps {
+  id: string;
   title: string;
   items: MenuItem[];
 }
 
-export default function MenuSection({ title, items }: MenuSectionProps) {
+export default function MenuSection({ id, title, items }: MenuSectionProps) {
   return (
-    <section className="flex w-full flex-col gap-10 sm:gap-14">
+    <section id={id} className="flex w-full flex-col gap-10 sm:gap-14">
       {/* SectionTitleRow animates itself: lines grow, stars pop, title write-on */}
       <SectionTitleRow title={title} />
 

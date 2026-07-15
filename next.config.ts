@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  devIndicators: false,
   images: {
     // Next 16 only serves qualities on this allowlist; 85 is used by hero imagery.
     qualities: [75, 85],
