@@ -51,8 +51,8 @@ export default function Navbar() {
               alt="Dog It Up"
               width={120}
               height={40}
-              priority
-              className="h-8 w-auto object-contain sm:h-9 xl:h-10 2xl:h-11"
+              preload
+              className="h-10 w-auto object-contain sm:h-11 xl:h-12 2xl:h-14"
             />
           </Link>
         </motion.div>

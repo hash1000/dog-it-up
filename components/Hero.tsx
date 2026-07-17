@@ -88,8 +88,8 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Rotating flavor showcase — hand meets the hero's bottom edge. */}
-        <HeroShowcase className="absolute bottom-0 right-[4%] hidden w-[clamp(340px,34vw,520px)] lg:block min-[1920px]:right-[6%]" />
+        {/* Rotating flavor showcase — hand bleeds off the hero's right edge. */}
+        <HeroShowcase className="absolute bottom-0 right-0 hidden w-[clamp(520px,54vw,900px)] lg:block min-[1920px]:w-250" />
       </HeroSequence>
 
       {/* Below lg: sky backdrop behind the whole stack, showcase under text */}
@@ -135,7 +135,7 @@ export default function Hero() {
             ))}
           </HeroFeatures>
         </div>
-        <HeroShowcase className="relative mx-auto mt-auto w-full max-w-[420px] px-6 sm:max-w-[460px]" />
+        <HeroShowcase className="relative mx-auto mt-auto w-full max-w-120 px-6 sm:max-w-135" />
       </HeroSequence>
     </section>
   );

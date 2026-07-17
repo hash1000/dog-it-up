@@ -24,10 +24,9 @@ const FLAVORS: Flavor[] = [
 const HOLD_MS = 3800;
 
 /**
- * Auto-cycling flavor showcase: a hand raises each signature dog up from the
- * hero's bottom edge, floats it gently while held, then drops it out as the
- * next rises in. Pauses on hover/focus; dots jump straight to a flavor.
- * Reduced motion collapses everything to plain cross-fades.
+ * Auto-cycling flavor showcase: each signature dog smoothly flips out around
+ * its vertical axis and the next flips in. Pauses on hover/focus; dots jump
+ * straight to a flavor. Reduced motion collapses everything to cross-fades.
  */
 export default function HeroShowcase({ className }: { className?: string }) {
   const reduced = useReducedMotion() ?? false;
@@ -56,15 +55,15 @@ export default function HeroShowcase({ className }: { className?: string }) {
         transition: { duration: 0.3, delay: enterDelay },
       }
     : {
-        initial: { opacity: 0, y: "45%", rotate: 8 },
-        animate: { opacity: 1, y: "0%", rotate: 0 },
+        initial: { opacity: 0, rotateY: -55, scale: 0.94 },
+        animate: { opacity: 1, rotateY: 0, scale: 1 },
         exit: {
           opacity: 0,
-          y: "50%",
-          rotate: -6,
-          transition: { duration: 0.4, ease: EASE },
+          rotateY: 55,
+          scale: 0.94,
+          transition: { duration: 0.35, ease: EASE },
         },
-        transition: { duration: 0.7, ease: EASE, delay: enterDelay },
+        transition: { duration: 0.55, ease: EASE, delay: enterDelay },
       };
 
   return (
@@ -108,9 +107,9 @@ export default function HeroShowcase({ className }: { className?: string }) {
           ))}
         </div>
 
-        {/* Bottom edge stays clipped so hands rise from "behind" the hero. */}
-        <div className="relative aspect-square w-full overflow-hidden">
-          <AnimatePresence initial={true}>
+        {/* Box matches the photos' real ~758x430 ratio so no dead space above. */}
+        <div className="relative aspect-7/4 w-full perspective-distant">
+          <AnimatePresence initial={true} mode="wait">
             <motion.div
               key={flavor.name}
               className="absolute inset-0"
@@ -120,24 +119,13 @@ export default function HeroShowcase({ className }: { className?: string }) {
               transition={slide.transition}
               onAnimationComplete={() => setHasEntered(true)}
             >
-              <motion.div
-                className="relative h-full w-full"
-                animate={reduced ? undefined : { y: [0, -10, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.7,
-                }}
-              >
-                <Image
-                  src={flavor.src}
-                  alt={`${flavor.name} held up in DOG IT UP wrapping`}
-                  fill
-                  sizes="(min-width: 1024px) 34vw, (min-width: 640px) 420px, 90vw"
-                  className="object-contain object-bottom"
-                />
-              </motion.div>
+              <Image
+                src={flavor.src}
+                alt={`${flavor.name} held up in DOG IT UP wrapping`}
+                fill
+                sizes="(min-width: 1920px) 1000px, (min-width: 1024px) 54vw, (min-width: 640px) 540px, 95vw"
+                className="object-contain object-bottom"
+              />
             </motion.div>
           </AnimatePresence>
         </div>
