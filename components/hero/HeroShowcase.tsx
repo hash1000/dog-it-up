@@ -12,12 +12,12 @@ interface Flavor {
 }
 
 const FLAVORS: Flavor[] = [
-  { name: "American Classic", src: "/hero/american-classic.webp" },
-  { name: "Nashville Hot", src: "/hero/nashville-hot.webp" },
-  { name: "Texas Chilli Cheese", src: "/hero/texas-chilli-cheese.webp" },
-  { name: "Midwest MAC Daddy", src: "/hero/midwest-mac-daddy.webp" },
-  { name: "Kansas City Smokehouse", src: "/hero/kansas-city-smokehouse.webp" },
-  { name: "Loaded Fries", src: "/hero/loaded-fries.webp" },
+  { name: "American Classic", src: "/hero/american-classic-new.webp" },
+  { name: "Nashville Hot", src: "/hero/nashville-hot-new.webp" },
+  { name: "Texas Chilli Cheese", src: "/hero/texas-chilli-cheese-new.webp" },
+  { name: "Midwest MAC Daddy", src: "/hero/midwest-mac-daddy-new.webp" },
+  { name: "Kansas City Smokehouse", src: "/hero/kansas-city-smokehouse-new.webp" },
+  { name: "Loaded Fries", src: "/hero/loaded-fries-new.webp" },
 ];
 
 /** How long each flavor is held up before the next one rises in. */

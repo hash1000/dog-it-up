@@ -19,33 +19,33 @@ export const signatureDogs: MenuItem[] = [
     slug: "classic-american",
     name: "Classic American",
     tagline: "The one that started it all.",
-    image: "/menu/american-classic.webp",
+    image: "/menu/american-classic-new.webp",
     description:
       "100% All Beef Hot Dog, topped with Ketchup, Mustard and Relish.",
     badge: "Bestseller",
   },
   {
-    slug: "nashville-hot",
+    slug: "nashville-hot-new",
     name: "Nashville Hot",
     tagline: "Sweet heat, no mercy.",
-    image: "/menu/nashville-hot.webp",
+    image: "/menu/nashville-hot-new.webp",
     description:
       "100% All Beef Hot Dog, topped with Nashville Hot Sauce, Warm Cheddar Sauce and Pickles",
     badge: "Spicy",
   },
   {
-    slug: "kansas-city-smokehouse",
+    slug: "kansas-city-smokehouse-new",
     name: "Kansas City Smokehouse",
     tagline: "Smoke, cheddar, bacon. Case closed.",
-    image: "/menu/kansas-city-smokehouse.webp",
+    image: "/menu/kansas-city-smokehouse-new.webp",
     description:
       "100% All Beef Hot Dog, topped with Nashville Hot and Warm Cheddar Sauce, bacon, and Pickles",
   },
   {
-    slug: "midwest-mac-daddy",
+    slug: "midwest-mac-daddy-new",
     name: "Midwest Mac Daddy",
     tagline: "Mac & cheese called shotgun.",
-    image: "/menu/midwest-mac-daddy.webp",
+    image: "/menu/midwest-mac-daddy-new.webp",
     description:
       "100% All Beef Hot Dog, topped with creamy mac & cheese, Warm Cheddar Sauce and Cheddar Sauce and Bacon.",
   },
