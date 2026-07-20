@@ -42,7 +42,7 @@ import {
 } from "@/lib/motion";
 
 interface Slide {
-  /** Wide crop (1799×874) shown at md+ viewports. */
+  /** Wide crop (1440×700) shown at md+ viewports. */
   desktop: string;
   /** Portrait crop (500×700) shown below md. */
   mobile: string;
@@ -62,6 +62,11 @@ const SLIDES: readonly Slide[] = [
     location: "Restaurant Counters",
   },
   {
+    desktop: "/partner/web/drive-thru.webp",
+    mobile: "/partner/mobile/drive-thru.webp",
+    location: "Drive-Thru Windows",
+  },
+  {
     desktop: "/partner/web/food-courts-malls.webp",
     mobile: "/partner/mobile/food-courts-malls.webp",
     location: "Food Courts & Malls",
@@ -72,9 +77,9 @@ const SLIDES: readonly Slide[] = [
     location: "Gas Stations & C-Stores",
   },
   {
-    desktop: "/partner/web/drive-thru.webp",
-    mobile: "/partner/mobile/drive-thru.webp",
-    location: "Drive-Thru Windows",
+    desktop: "/partner/web/street-carts-kiosks.webp",
+    mobile: "/partner/mobile/street-carts-kiosks.webp",
+    location: "Street Carts & Kiosks",
   },
 ] as const;
 
@@ -113,8 +118,8 @@ function SlideImage({
   const { props: desktopProps } = getImageProps({
     ...common,
     src: slide.desktop,
-    width: 1799,
-    height: 874,
+    width: 1440,
+    height: 700,
   });
 
   return (
